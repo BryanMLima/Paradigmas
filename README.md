@@ -1,0 +1,2 @@
+# Paradigmas
+Tudo de paradigmas
