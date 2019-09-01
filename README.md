@@ -1,2 +1,2 @@
 # Paradigmas
-Tudo de paradigmas
+Exercicios e Trabalhos relacionados a Paradigmas
