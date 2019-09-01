@@ -1,9 +1,7 @@
-busca :: [Int] -> Int -> Int
-busca [] x = 0
-busca (a:b) x | (x == a) = 
-			  | otherwise = (busca b x)
+ocorrencia :: [Int] -> Int -> Int
+ocorrencia [] _ = 0
+ocorrencia (a:b) x | (a == x) = (ocorrencia b x) + 1
+                   | otherwise = ocorrencia b x   
 
-cont :: Int -> Int
-cont 
 main = do
-	print(busca [1,4,9,3,4,2] 2)
+    print(ocorrencia [1,4,2,9,3,4,2] 1)
