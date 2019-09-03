@@ -17,4 +17,5 @@ ponto32 :: Ponto
 ponto32 = (Ponto3d 9 9 9)
 
 main = do
+	print(distancia ponto31 ponto32)
 	print(distancia ponto21 ponto22)

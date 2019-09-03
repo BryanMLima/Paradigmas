@@ -37,4 +37,7 @@ getNum :: Float
 getNum = (fromIntegral numAluno)
 
 main = do
+    print(aluno 3)
+    print(getNome (aluno 1))
+    print(media 3)
     print(calcMedias numAluno)
