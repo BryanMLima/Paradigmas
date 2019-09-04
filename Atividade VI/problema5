@@ -1,0 +1,19 @@
+Newtype e data são ambos tipos que utilizam construtores de um só valor.
+Porém, newtype é interpretado de maneira restrita pelo compilador.
+Além disso, data seria representada encapsulada em memória, diferente de newtype.
+Se há uma "variavel" newtype do tipo Int e uma "variavel" Int, elas são 
+praticamente representadas igualmente em memória.
+Newtype poderia ser usado num caso como esse
+
+newtype Feet = Feet Double
+newtype Cm   = Cm Double
+
+Neste caso, você faz com que o compilador não deixe você confundir uma com
+a outra, mesmo que ambas sejam um inteiro.
+
+Fontes:
+<https://stackoverflow.com/questions/2649305/why-is-there-data-and-newtype-in-haskell>
+
+<https://wiki.haskell.org/Newtype>
+
+<https://www.reddit.com/r/haskell/comments/5z5bcy/newtype_vs_data/>
