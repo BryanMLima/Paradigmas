@@ -1,10 +1,14 @@
 data Arvore = Null | No Int Arvore Arvore
 
+instance Eq Arvore where
+    Null == Null = True
+    _    == _    = False
+
 minhaArvore1 :: Arvore
 minhaArvore1 = No 52 (No 32 (No 12 Null Null) (No 35 (No 12 (No 12 Null Null) Null) Null)) (No 56 (No 55 Null Null) (No 64 Null Null))
 
 minhaArvore2 :: Arvore
-minhaArvore2 = No 52 (No 12 Null Null) (No 12 Null Null)
+minhaArvore2 = No 6 ((No 2 (No 1 Null Null) (No 4 (No 3 Null Null) (No 5 Null Null))))((No 7 Null (No 9 (No 8 Null Null) Null)))
                                    
 somaElementos :: Arvore -> Int
 somaElementos Null = 0
@@ -70,10 +74,25 @@ maximo a b | (a > b) = a
            | otherwise = b
 
 folhas :: Arvore -> Int
-folhas (No n Null Null) = 1
-folhas (No n Null dir)  = 0
-folhas (No n esq Null)  = 0
+folhas (No _ Null Null) = 1
+folhas (No _ Null dir)  = folhas dir
+folhas (No _ esq Null)  = folhas esq
 folhas (No n esq dir) = folhas esq + folhas dir
+
+emOrdem :: Arvore -> [Int]
+emOrdem (No n Null Null) = [n]
+emOrdem (No n Null dir)  = [n] ++ emOrdem(dir)
+emOrdem (No n esq Null)  = emOrdem(esq) ++ [n]
+emOrdem (No n esq dir) = emOrdem(esq) ++ [n] ++ emOrdem(dir)
+
+menoresQueElemento :: Arvore -> Int -> [Int]
+menoresQueElemento Null _ = []
+menoresQueElemento (No n esq dir) x 
+    | (n < x) = (menoresQueElemento esq x) ++ (menoresQueElemento dir x) ++ [n]
+    | otherwise = (menoresQueElemento esq x) ++ (menoresQueElemento dir x)
+
+ehPar :: Int -> Bool
+ehPar x = (mod x 2 == 0)
 
 main = do
     -- print(ocorrenciasElemento minhaArvore 99)
@@ -81,7 +100,9 @@ main = do
     -- print(subtraiParesImpares minhaArvore)
     -- print(igual minhaArvore1 minhaArvore2)
     -- print(altura minhaArvore2)
-    print(folhas minhaArvore1)
+    -- print(folhas minhaArvore1)
+    -- print(emOrdem minhaArvore2)
+    print(filter ehPar (menoresQueElemento minhaArvore2 30))
 
     -- putStrLn (show (somaElementos minhaArvore))
     -- putStrLn (show (buscaElemento minhaArvore 30))
