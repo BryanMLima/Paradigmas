@@ -4,7 +4,7 @@ class (Integral x) => MeuInt x where
     par :: x -> Bool
     impar :: x -> Bool
     primo :: x -> Bool
-    mdc :: x -> x -> x -> Bool
+    mdc :: x -> x -> x
     (===) :: x -> x -> Bool
 
     bigger a b | a > b = a
@@ -24,6 +24,10 @@ class (Integral x) => MeuInt x where
     primo n | (length [x | x <- [2 .. n-1], mod n x ==0]) > 0 = False
             | otherwise = True
 
+    mdc _x 0 = _x
+    mdc x y =
+        mdc (bigger x y) (mod (bigger x y) (smaller x y))
+
     x === y | ((bigger x y) - (smaller x y)) > 1 = False
             | otherwise = True
 
@@ -34,3 +38,4 @@ instance MeuInt Int
 main = do
     print(par (8::Integer))
     print(impar (8::Integer))
+    print((mdc (8::Integer) (6::Integer)))
