@@ -1,7 +1,5 @@
-import Prelude
-
 xor :: Bool -> Bool -> Bool
-xor a b = (\x -> (\y -> (x or y) and (not (x and y))))
+xor a b = ((\x y -> (x || y) && (not (x && y))) a b)
 
 main = do
-    print (xor 1 0)
+    print (xor True True)
