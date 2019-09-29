@@ -1,7 +1,10 @@
-import Matrix
+import Data.Matrix
 
--- somaMatrix :: 
+somaMatrix :: [Int] -> Int
+somaMatrix [] = 0
+somaMatrix (a:b) = a + (somaMatrix b)
 
+          
 main = do
-    -- print(matrix 4 4 $ \(i,j) -> 2*i - j)
-    print("")
+    let b = matrix 4 4 $ \(i,j) -> 1
+    print(somaMatrix (toList b))
