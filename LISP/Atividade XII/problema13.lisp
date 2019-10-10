@@ -1,8 +1,8 @@
 (defun apagarEnquanto (func lista)
     (cond
         ((null lista) ())
-        ((not (funcall func (car lista))) (cdr lista))
-        (cons (car lista) (apagarEnquanto func (cdr lista)))
+        ((funcall func (car lista)) (apagarEnquanto func (cdr lista)))
+        (t lista)
     )
 )
 
