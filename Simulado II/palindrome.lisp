@@ -1,24 +1,24 @@
 (defun palindrome (n)
-    (= n (reverso n))
+    (igual n (reverso () n))
 )
 
-(defun reverso (lista)
+(defun reverso (reversa lista)
     (if (null lista)
-        ()
-        (list* (reverso (cdr lista)) (car lista))
+        reversa
+        (reverso (list* (car lista) reversa ) (cdr lista))
     )
 )
 
-;; (defun reverso (reversa lista)
-;;     (if (null lista)
-;;         reversa
-;;         (reverso (list* (car lista) reversa ) (cdr lista))
-;;     )
-;; )
-
-(defun compare (lista1 lista2)
-    (if (or (null lista1) (null lista2))
-    
+(defun igual (lista1 lista2)
+    (if (and (null lista1) (null lista2))
+        T
+        (if (or (null lista1) (null lista2))
+            NIL
+            (if (= (car lista1) (car lista2))
+                (igual (cdr lista1) (cdr lista2))
+                NIL
+            )
+        )
     )
 )
 

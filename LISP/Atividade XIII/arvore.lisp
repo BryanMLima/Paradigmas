@@ -72,13 +72,33 @@
     )
 )
 
+(defun ocorrenciasElemento (arv x)
+    (if (null arv)
+        0
+        (if (= (no-n arv) x)
+            (+
+                1
+                (ocorrenciasElemento (no-esq arv) x)
+                (ocorrenciasElemento (no-dir arv) x)
+            )
+            0
+        )
+    )
+
+)
+
+(defun posordem (arv)
+    
+)
+
 (defun main()
-    (write-line (write-to-string (soma minhaArvore)))
-    (write-line (write-to-string (buscaElemento minhaArvore 35)))
-    (write-line (write-to-string (buscaElemento minhaArvore 36)))
-    (write-line (write-to-string (minimoElemento minhaArvore)))
-    (write-line (write-to-string (incrementa minhaArvore 2)))
-    (write-line (write-to-string minhaArvore))
+    (write-line (write-to-string (ocorrenciasElemento minhaArvore 12)))
+    ;; (write-line (write-to-string (soma minhaArvore)))
+    ;; (write-line (write-to-string (buscaElemento minhaArvore 35)))
+    ;; (write-line (write-to-string (buscaElemento minhaArvore 36)))
+    ;; (write-line (write-to-string (minimoElemento minhaArvore)))
+    ;; (write-line (write-to-string (incrementa minhaArvore 2)))
+    ;; (write-line (write-to-string minhaArvore))
 )
 
 (main)
