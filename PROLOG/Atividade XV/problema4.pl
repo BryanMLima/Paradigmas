@@ -1,0 +1,1 @@
+triangulo(X,Y,Z) :- abs -9.
