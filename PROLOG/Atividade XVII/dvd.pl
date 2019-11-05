@@ -114,15 +114,58 @@ locacao(c5, d1, '2005-11-15').
 % Filmes = ['Monty Python: O Sentido da Vida', 'Edukators'].
 
 % N)
+% ?- findall(Filme,(filme(F,Filme,_,_,_), locacao(c6,DVD,_), dvd(DVD,F,_)),Filmes),
+% |    sort(Filmes,FilmesNaoRepetidos),
+% |    length(FilmesNaoRepetidos,FilmesDiferentes).
+% Filmes = ['Monty Python: O Sentido da Vida', 'Edukators'],
+% FilmesNaoRepetidos = ['Edukators', 'Monty Python: O Sentido da Vida'],
+% FilmesDiferentes = 2.
 
 % 0)
+% ?- bagof(Filme, Id ^ F ^ B ^ A ^ C ^ (dvd(Id,F,Estante), filme(F,Filme,A,B,C)), Filmes).
+% Estante = est1,
+% Filmes = ['Monty Python: O Sentido da Vida', 'Edukators', 'Lisbela e o Prisioneira', 'Monty Python: O Sentido da Vida'] ;
+% Estante = est2,
+% Filmes = ['Lavoura Arcaica'] ;
+% Estante = est3,
+% Filmes = ['Abril despeda�ado'] ;
+% Estante = est4,
+% Filmes = ['Edukators', 'Edukators'].
 
 % P)
 % ?- findall(Pais,(locacao(c1, DVD, '2005-11-07'), dvd(DVD,Filme,_), filme(Filme,_,_,_,Pais)),Paises).
 % Paises = [uk, de].
 
 % Q)
+% ?- findall(Filme,(filme(F,Filme,_,_,br), locacao(c1,DVD,_), dvd(DVD,F,_)),Filmes),
+% sort(Filmes,FilmesNaoRepetidos),
+% length(FilmesNaoRepetidos,FilmesBrasileirosBob).
+% Filmes = FilmesNaoRepetidos, FilmesNaoRepetidos = ['Abril despeda�ado'],
+% FilmesBrasileirosBob = 1.
+
+% R)
+% ?- bagof(Filme, DVD ^ A ^ F ^ Est ^ B ^ C ^ D ^ Cliente ^ Tel ^(locacao(Cliente, DVD, A), cliente(Cliente,Nome,Tel) ,dvd(DVD,F,Est), filme(F,Filme,D,B,C)), Filmes).
+% Nome = 'Alice',
+% Filmes = ['Edukators', 'Monty Python: O Sentido da Vida'] ;
+% Nome = 'Bianca',
+% Filmes = ['Edukators'] ;
+% Nome = 'Bob',
+% Filmes = ['Monty Python: O Sentido da Vida', 'Edukators', 'Abril despeda�ado', 'Monty Python: O Sentido da Vida'] ;
+% Nome = 'Maria',
+% Filmes = ['Monty Python: O Sentido da Vida', 'Edukators'] ;
+% Nome = 'Tom',
+% Filmes = ['Abril despeda�ado', 'Lavoura Arcaica', 'Edukators', 'Edukators'] ;
+% Nome = 'Zeca',
+% Filmes = ['Lavoura Arcaica'].
 
 % S)
-% ?- findall(Filme,(locacao(c2, DVD,_),locacao(c3, DVD,_), dvd(DVD,Filme,_), filme(Filme,_,_,_,Pais)),Filmes).
-% Filmes = [f3].
+% ?- findall(Filme,(locacao(c2, DVD,_),locacao(c3, DVD,_), dvd(DVD,F,_), filme(F,Filme,_,_,Pais)),Filmes).
+% Filmes = ['Lavoura Arcaica'].
+
+% T)
+% ?- findall(Filme,(locacao(c1, DVD,_),not(locacao(c6, DVD,_)), dvd(DVD,F,_), filme(F,Filme,_,_,Pais)),Filmes).
+% Filmes = ['Monty Python: O Sentido da Vida', 'Abril despeda�ado'].
+
+% U)
+% ?- findall(Filme,(filme(F,Filme,_,_,_), not((locacao(c1,DVD,_), dvd(DVD,F,_);locacao(c6,DVD,_),dvd(DVD,F,_)))),Filmes).
+% Filmes = ['Lavoura Arcaica', 'Lisbela e o Prisioneira', 'Di�rios de motocicleta'].
