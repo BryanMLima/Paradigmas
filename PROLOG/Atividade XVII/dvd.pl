@@ -5,8 +5,8 @@ filme(f1, 'Monty Python: O Sentido da Vida', 1983, 'Terry Jones', uk).
 filme(f2, 'Edukators', 2004, 'Hans Weingartner', de).
 filme(f3, 'Lavoura Arcaica', 2001, 'Luiz Fernando Carvalho', br).
 filme(f4, 'Lisbela e o Prisioneira', 2003, 'Guel Arraes', br).
-filme(f5, 'Abril despedaçado', 2001, 'Walter Salles', br).
-filme(f6, 'Diários de motocicleta', 2004, 'Walter Salles', br).
+filme(f5, 'Abril despedaï¿½ado', 2001, 'Walter Salles', br).
+filme(f6, 'Diï¿½rios de motocicleta', 2004, 'Walter Salles', br).
 
 % Relacao de paises
 %     pais(sigla, nome).
@@ -54,3 +54,75 @@ locacao(c6, d2, '2005-11-14').
 locacao(c3, d7, '2005-11-14').
 locacao(c3, d8, '2005-11-14').
 locacao(c5, d1, '2005-11-15').
+
+% A)
+% ?- findall(F,(filme(_,F,Ano,_,_), Ano < 2001),Filmes).
+% Filmes = ['Monty Python: O Sentido da Vida'].
+
+% B)
+% ?- findall(F,(filme(_,F,Ano,_,_), Ano =< 2004, Ano >= 2001),Filmes).
+% Filmes = ['Edukators', 'Lavoura Arcaica', 'Lisbela e o Prisioneira', 'Abril despedaï¿½ado', 'Diï¿½rios de motocicleta'].
+
+% C)
+% ?- findall(F,(filme(_,F,_,_,Pais), pais(Pais,'Brasil')),Filmes),
+% |    sort(Filmes,FilmesOrdenado).
+% Filmes = ['Lavoura Arcaica', 'Lisbela e o Prisioneira', 'Abril despedaï¿½ado', 'Diï¿½rios de motocicleta'],
+% FilmesOrdenado = ['Abril despedaï¿½ado', 'Diï¿½rios de motocicleta', 'Lavoura Arcaica', 'Lisbela e o Prisioneira'].
+
+% D)
+% ?- findall(F,(filme(_,F,_,_,Pais), not(pais(Pais,'Brasil'))),Filmes),
+% |    sort(Filmes,FilmesOrdenados).
+% Filmes = ['Monty Python: O Sentido da Vida', 'Edukators'],
+% FilmesOrdenados = ['Edukators', 'Monty Python: O Sentido da Vida'].
+
+% E)
+% ?- findall(F,(filme(_,F,Ano,_,Pais), Ano =< 2004,pais(Pais,'Alemanha')),Filmes).
+% Filmes = ['Edukators'].
+
+% F)
+% ?- findall(DVD,(dvd(DVD,Filme,_), filme(Filme,_,_,_,Pais),not(pais(Pais,'Brasil'))),DVDS).
+% DVDS = [d1, d2, d6, d7, d8].
+
+% G)
+% ?- findall(DVD,(dvd(DVD,Filme,est2), filme(Filme,_,_,_,Pais),pais(Pais,'Brasil')),DVDS).
+% DVDS = [d3].
+
+% H)
+% ?- findall(Diretor, (dvd(_,Filme,est1),filme(Filme,_,_,Diretor,_)), Diretores),
+% |    sort(Diretores,DiretoresOrdenado).
+% Diretores = ['Terry Jones', 'Hans Weingartner', 'Guel Arraes', 'Terry Jones'],
+% DiretoresOrdenado = ['Guel Arraes', 'Hans Weingartner', 'Terry Jones'].
+
+% I)
+% ?- findall(Filme, (filme(F,Filme,_,_,_), not(dvd(_,F,_))), Filmes).
+% Filmes = ['Diï¿½rios de motocicleta'].
+
+% J)
+% ?- findall(Pais, (filme(F,_,_,_,Pais), (dvd(_,F,est1); dvd(_,F,est4))), Filmes).
+% Filmes = [uk, uk, de, de, de, br].
+
+% K)
+% ?- findall(Nome, (locacao(Cliente,_,'2005-11-07'), cliente(Cliente,Nome,_)), Nomes).
+% Nomes = ['Bob', 'Bob'].
+
+% L)
+% ?- findall(Estante, (locacao(_,DVD,_), dvd(DVD,_,Estante)), Estantes).
+% Estantes = [est1, est1, est3, est2, est2, est4, est4, est1, est3|...].
+
+% M)
+% ?- findall(Filme, (locacao(c6,DVD,_), dvd(DVD,F,_), filme(F,Filme,_,_,_)), Filmes).
+% Filmes = ['Monty Python: O Sentido da Vida', 'Edukators'].
+
+% N)
+
+% 0)
+
+% P)
+% ?- findall(Pais,(locacao(c1, DVD, '2005-11-07'), dvd(DVD,Filme,_), filme(Filme,_,_,_,Pais)),Paises).
+% Paises = [uk, de].
+
+% Q)
+
+% S)
+% ?- findall(Filme,(locacao(c2, DVD,_),locacao(c3, DVD,_), dvd(DVD,Filme,_), filme(Filme,_,_,_,Pais)),Filmes).
+% Filmes = [f3].
