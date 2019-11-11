@@ -21,18 +21,6 @@ destino(para).
 todosDiferentes([]).
 todosDiferentes([H|T]) :- not(member(H,T)), todosDiferentes(T).
 
-% voo com horario H2 éh meia hora antes do que o voo com horario H1
-meiaHoraAntes(voo(_,H1,_,_), voo(_,H2,_,_)) :- horario(H2), horario(H1), H2 =:= H1 - 30.
-
-% voo com horario H2 éh meia hora depois do que o voo com horario H1
-meiaHoraDepois(voo(_,H1,_,_), voo(_,H2,_,_)) :- H2 = H1 + 30.
-
-% voo de horario H1 é antes do voo com horario H2
-vooAntes(voo(_,H1,_,_), voo(_,H2,_,_)) :- H1 < H2.
-
-% voo de horario H1 é antes do voo com horario H2
-vooDepois(voo(_,H1,_,_), voo(_,H2,_,_)) :- H1 > H2.
-
 solucao(Solucao) :-
     Solucao = [
         voo(Passageiro1, Horario1, Mala1, Destino1),
@@ -47,23 +35,23 @@ solucao(Solucao) :-
         member(voo(william,_,preta,_), Solucao)
     ),
 
-    % o voo do passageiro da mochila verde eh meia hora antes que o voo do passageiro que viajara para o Para
-    meiaHoraAntes(voo(_,H1,mala(verde),_), voo(_,H2,_,destino(para))),
+    % o voo do passageiro da mochila verde eh meia hora antes que o voo do passageiro que viajara para o bahia
+    member(voo(_,H1,verde,_), Solucao), member(voo(_,H2,_,bahia), Solucao), horario(H1), horario(H2), H1 =:= H2 - 30,
 
     % cicero vai para minas gerais
     member(voo(cicero,_,_,minas_gerais), Solucao),
 
     % o voo com destino a minas gerais saira antes que o voo do passageiro da mochila vermelha
-    % horario(H1), horario(H2), vooAntes(voo(_,H1,_,minas_gerais), voo(_,H2,vermelha,_)),
+    member(voo(_,H3,_,minas_gerais), Solucao), member(voo(_,H4,vermelha,_), Solucao), horario(H3), horario(H4), H3 < H4,
 
-    % o voo do passageiro de mala preta eh meia hora depois que o voo para o Para
-    % meiaHoraDepois(voo(_,horario(H1),mala(preta),_), voo(_,horario(H2),_,destino(para))),
+    % % % o voo do passageiro de mala preta eh meia hora depois que o voo para o Para
+    member(voo(_,H5,preta,_), Solucao), member(voo(_,H6,_,para), Solucao), horario(H5), horario(H6), H6 =:= H5 - 30,
 
-    % o voo do William saira antes que o voo do passageiro da mala azul
-    % vooAntes(voo(passageiro(william),horario(H1),_,_), voo(_,horario(H2),mala(azul),_)),
+    % % % o voo do William saira antes que o voo do passageiro da mala azul
+    member(voo(william,H7,_,_), Solucao), member(voo(_,H8,azul,_), Solucao), horario(H7), horario(H8), H7 < H8,
 
-    % o voo do vitor saira depois que o voo para o para
-    % vooDepois(voo(passageiro(vitor),horario(H1),_,_), voo(_,horario(H2),_,destino(para))),
+    % % % o voo do vitor saira depois que o voo para o para
+    member(voo(vitor,H9,_,_), Solucao), member(voo(_,H10,_,para), Solucao), horario(H9), horario(H10), H9 > H10,
 
     % Testa todas as possibilidades
     passageiro(Passageiro1), passageiro(Passageiro2), passageiro(Passageiro3), passageiro(Passageiro4),
