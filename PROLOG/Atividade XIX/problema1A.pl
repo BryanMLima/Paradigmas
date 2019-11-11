@@ -22,7 +22,7 @@ todosDiferentes([]).
 todosDiferentes([H|T]) :- not(member(H,T)), todosDiferentes(T).
 
 % voo com horario H2 éh meia hora antes do que o voo com horario H1
-meiaHoraAntes(voo(_,H1,_,_), voo(_,H2,_,_)) :- H2 = H1 - 30.
+meiaHoraAntes(voo(_,H1,_,_), voo(_,H2,_,_)) :- horario(H2), horario(H1), H2 =:= H1 - 30.
 
 % voo com horario H2 éh meia hora depois do que o voo com horario H1
 meiaHoraDepois(voo(_,H1,_,_), voo(_,H2,_,_)) :- H2 = H1 + 30.
@@ -34,41 +34,36 @@ vooAntes(voo(_,H1,_,_), voo(_,H2,_,_)) :- H1 < H2.
 vooDepois(voo(_,H1,_,_), voo(_,H2,_,_)) :- H1 > H2.
 
 solucao(Solucao) :-
-    Solucao =
-    [
-        voo(passageiro(Passageiro1), horario(Horario1), mala(Mala1), destino(Destino1)),
-        voo(passageiro(Passageiro2), horario(Horario2), mala(Mala2), destino(Destino2)),
-        voo(passageiro(Passageiro3), horario(Horario3), mala(Mala3), destino(Destino3)),
-        voo(passageiro(Passageiro4), horario(Horario4), mala(Mala4), destino(Destino4))
+    Solucao = [
+        voo(Passageiro1, Horario1, Mala1, Destino1),
+        voo(Passageiro2, Horario2, Mala2, Destino2),
+        voo(Passageiro3, Horario3, Mala3, Destino3),
+        voo(Passageiro4, Horario4, Mala4, Destino4)
     ],
 
     % william vai pra minas gerais ou eh o dono da mala preta
     (
-        member(voo(passageiro(william),_,_,destino(minas_gerais)), Solucao);
-        member(voo(passageiro(william),_,mala(preto),_), Solucao)
+        member(voo(william,_,_,minas_gerais), Solucao);
+        member(voo(william,_,preta,_), Solucao)
     ),
 
     % o voo do passageiro da mochila verde eh meia hora antes que o voo do passageiro que viajara para o Para
-    % meiaHoraAntes(voo(_,_,mala(verde),_), voo(_,_,_,destino(para))),
+    meiaHoraAntes(voo(_,H1,mala(verde),_), voo(_,H2,_,destino(para))),
 
     % cicero vai para minas gerais
-    member(voo(passageiro(cicero),_,_,destino(minas_gerais)), Solucao),
+    member(voo(cicero,_,_,minas_gerais), Solucao),
 
     % o voo com destino a minas gerais saira antes que o voo do passageiro da mochila vermelha
-    % vooAntes(voo(_,H1,_,destino(minas_gerais)), voo(_,H2,mala(vermelha),_)),
-    H1 is H2 + 30,
-    member(voo(_,horario(H1),_,destino(minas_gerais)), Solucao),
-    member(voo(_,horario(H2),mala(vermelha),_), Solucao),
-    % not(dif(H3, H2)),
+    % horario(H1), horario(H2), vooAntes(voo(_,H1,_,minas_gerais), voo(_,H2,vermelha,_)),
 
     % o voo do passageiro de mala preta eh meia hora depois que o voo para o Para
-    % meiaHoraDepois(voo(_,horario(H1),mala(preto),_), voo(_,horario(H2),_,destino(para))),
+    % meiaHoraDepois(voo(_,horario(H1),mala(preta),_), voo(_,horario(H2),_,destino(para))),
 
     % o voo do William saira antes que o voo do passageiro da mala azul
-    vooAntes(voo(passageiro(william),horario(H1),_,_), voo(_,horario(H2),mala(azul),_)),
+    % vooAntes(voo(passageiro(william),horario(H1),_,_), voo(_,horario(H2),mala(azul),_)),
 
     % o voo do vitor saira depois que o voo para o para
-    vooDepois(voo(passageiro(vitor),horario(H1),_,_), voo(_,horario(H2),_,destino(para))),
+    % vooDepois(voo(passageiro(vitor),horario(H1),_,_), voo(_,horario(H2),_,destino(para))),
 
     % Testa todas as possibilidades
     passageiro(Passageiro1), passageiro(Passageiro2), passageiro(Passageiro3), passageiro(Passageiro4),
