@@ -28,11 +28,6 @@ minimo(no(N, ArvE, ArvD),Min) :-
     minimo(ArvD, MinD),
     min(MinE, MinD, MinED),
     min(N, MinED, Min).
-    
-caminho(Y, no(Y, _, _), [Y]) :- !.
-caminho(Y, no(K, ArvE, ArvD), [K|Caminho]) :-
-    caminho(Y, ArvE, Caminho), !;
-    caminho(Y, ArvD, Caminho).
 
 ocorrencias(_, nil, 0) :- !.
 ocorrencias(X, no(K,Esq,Dir), N) :-
@@ -189,8 +184,27 @@ altura(no(_,Esq,Dir),H) :-
 % E = no(32, no(12, nil, nil), no(35, nil, nil)),
 % D = no(56, no(55, no(55, nil, nil), nil), no(64, nil, nil)),
 % H = 3.
-caminhoXParaY(X, Y, no(Y, _, _), [Y]) :- !.
-caminhoXParaY(X, Y, no(K, Esq, Dir), [K|Caminho]) :-
-    caminhoXParaY(K,Y,Esq,Caminho), !;
-    caminhoXParaY(K,Y,Dir,Caminho).
+
+caminho(Y, no(Y, _, _), [Y]) :- !.
+caminho(Y, no(K, ArvE, ArvD), [K|Caminho]) :-
+    caminho(Y, ArvE, Caminho), !;
+    caminho(Y, ArvD, Caminho).
+
+
+count(X-X1, 0) :- unify_with_occurs_check(X,X1), !.
+count([H|T]-T1, N) :- count(T-T1, M), N is M+1.
+
+% caminhoXParaY(X, Y, no(Y, _, _), [Y]) :- !.
+% caminhoXParaY(X, Y, no(K, Esq, Dir), [K|Caminho]) :-
+%     caminhoXParaY(K,Y,Esq,Caminho), !;
+%     caminhoXParaY(K,Y,Dir,Caminho).
+caminhoXParaY(X, Y, Arv, Caminho) :-
+    caminho(X, Arv, Caminho1),
+    caminho(Y, Arv, Caminho2).
+    % interseccao(Caminho1, Caminho2, Caminho).
 % no(X,E,D), caminhoXParaY(52,64,no(X,E,D),L).
+interseccao([],_,[]).
+interseccao([H|T],S,[H|R]) :-
+    membro(H,S), interseccao(T,S,R).
+interseccao([H|T],S,R) :-
+    not(membro(H,S)), interseccao(T,S,R).
